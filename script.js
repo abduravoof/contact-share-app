@@ -7,23 +7,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function displayForm() {
     var formHtml = `
-        <div class="col-md-6">
-            <form id="contactForm">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+        <ons-list>
+            <ons-list-item>
+                <div class="center">
+                    <ons-input id="name" modifier="underbar" placeholder="Name" float></ons-input>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+            </ons-list-item>
+            <ons-list-item>
+                <div class="center">
+                    <ons-input id="email" type="email" modifier="underbar" placeholder="Email" float></ons-input>
                 </div>
-                <div class="form-group">
-                    <label for="phone">Phone Number:</label>
-                    <input type="tel" class="form-control" id="phone" name="phone" required>
+            </ons-list-item>
+            <ons-list-item>
+                <div class="center">
+                    <ons-input id="phone" type="tel" modifier="underbar" placeholder="Phone" float></ons-input>
                 </div>
-                <button type="submit" class="btn btn-primary">Generate QR Code</button>
-            </form>
-        </div>`;
+            </ons-list-item>
+        </ons-list>
+        <ons-button modifier="large--cta" onclick="saveDataAndGenerateQRCode()">Generate QR Code</ons-button>
+    `;
     document.getElementById("contactFormContainer").innerHTML = formHtml;
     document.getElementById("qrCodeContainer").innerHTML = '';
     document.getElementById("noDataContainer").innerHTML = '';
@@ -34,12 +36,6 @@ function displayForm() {
         document.getElementById("email").value = localStorage.getItem("email");
         document.getElementById("phone").value = localStorage.getItem("phone");
     }
-
-    // Handle form submission
-    document.getElementById("contactForm").addEventListener("submit", function (event) {
-        event.preventDefault();
-        saveDataAndGenerateQRCode();
-    });
 }
 
 function saveDataAndGenerateQRCode() {
@@ -47,26 +43,14 @@ function saveDataAndGenerateQRCode() {
     var email = document.getElementById("email").value;
     var phone = document.getElementById("phone").value;
 
-    // Store data in local storage
     localStorage.setItem("name", name);
     localStorage.setItem("email", email);
     localStorage.setItem("phone", phone);
 
-    // Generate QR Code
-    var qrData = `MECARD:N:${name};EMAIL:${email};TEL:${phone};;`;
-    QRCode.toDataURL(qrData, function (err, url) {
-        if (err) throw err;
-        document.getElementById('qrCodeContainer').innerHTML = '<img src="' + url + '"/>';
-        document.getElementById("contactFormContainer").innerHTML = '';
-        document.getElementById("noDataContainer").innerHTML = '';
-    });
+    generateQRCode(name, email, phone);
 }
 
-function displayQRCode() {
-    var name = localStorage.getItem("name");
-    var email = localStorage.getItem("email");
-    var phone = localStorage.getItem("phone");
-
+function generateQRCode(name, email, phone) {
     var qrData = `MECARD:N:${name};EMAIL:${email};TEL:${phone};;`;
     QRCode.toDataURL(qrData, function (err, url) {
         if (err) throw err;
@@ -78,10 +62,14 @@ function displayQRCode() {
 
 function checkLocalStorage() {
     if (localStorage.getItem("name") && localStorage.getItem("email") && localStorage.getItem("phone")) {
-        displayQRCode();
+        var name = localStorage.getItem("name");
+        var email = localStorage.getItem("email");
+        var phone = localStorage.getItem("phone");
+        generateQRCode(name, email, phone);
     } else {
         document.getElementById("noDataContainer").innerHTML = '<p>Please update your contact information by clicking the edit button.</p>';
         document.getElementById("contactFormContainer").innerHTML = '';
         document.getElementById("qrCodeContainer").innerHTML = '';
     }
 }
+
