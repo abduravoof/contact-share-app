@@ -2,31 +2,35 @@
 <html>
 <head>
     <title>Contact Info to QR Code</title>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="text-center logo">
-            <img src="contact.png" alt="Logo" width="100" height="100">
-        </div>
-        <h1 class="text-center main-heading">Contact Share App</h1>
-        <div id="contactFormContainer" class="row justify-content-center">
-            <!-- Contact Form Goes Here -->
-        </div>
-        <div id="qrCodeContainer" class="row justify-content-center mt-4">
-            <!-- QR Code Goes Here -->
-        </div>
-        <div id="noDataContainer" class="row justify-content-center mt-4">
-            <!-- No Data Message Goes Here -->
-        </div>
+
+<ons-page>
+    <ons-toolbar>
+        <div class="center">Contact Information</div>
+    </ons-toolbar>
+
+    <div id="contactFormContainer" style="padding: 20px;">
+        <!-- Form will be dynamically inserted here -->
     </div>
 
-    <button id="editButton" class="btn btn-primary btn-block fixed-bottom">Edit</button>
+    <div id="qrCodeContainer" class="text-center" style="padding: 20px;">
+        <!-- QR Code will be displayed here -->
+    </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
+    <div id="noDataContainer" class="text-center" style="padding: 20px;">
+        <!-- No data message will be displayed here -->
+    </div>
+
+    <ons-bottom-toolbar>
+        <ons-button id="editButton" modifier="large--cta">Edit Contact Info</ons-button>
+    </ons-bottom-toolbar>
+</ons-page>
+
+<script src="script.js"></script>
 </body>
 </html>
